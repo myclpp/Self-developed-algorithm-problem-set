@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /**
+       * @param {number[]} nums1
+       * @param {number[]} nums2
+       * @return {number}
+       */
+      var findMedianSortedArrays = function (nums1, nums2) {
+        var len = nums1.length + nums2.length;
+        if (len === 1) {
+          return nums1.concat(nums2)[0];
+        } else if (len === 2) {
+          return (nums1.concat(nums2)[0] + nums1.concat(nums2)[1]) / 2;
+        } else {
+          let index1 = 0,
+            index2 = 0,
+            count = 0,
+            temp = [];
+          while (
+            count < nums1.concat(nums2).length - 1 &&
+            nums1[index1] !== undefined &&
+            nums2[index2] !== undefined
+          ) {
+            if (nums1[index1] < nums2[index2]) {
+              temp.push(nums1[index1++]);
+              count++;
+            } else {
+              temp.push(nums2[index2++]);
+              count++;
+            }
+          }
+          if (index1 < nums1.length - 1) {
+            for (let i = index1; i < nums1.length; i++) {
+              temp.push(nums1[i]);
+            }
+          } else if (index2 < nums2.length - 1) {
+            for (let i = index2; i < nums2.length; i++) {
+              temp.push(nums2[i]);
+            }
+          }
+          let len = nums1.length + nums2.length;
+          if (len % 2 === 0) {
+            return parseFloat((temp[len / 2] + temp[len / 2 - 1]) / 2).toFixed(
+              1
+            );
+          } else {
+            return parseFloat(temp[Math.floor(len / 2)]).toFixed(1);
+          }
+          // return temp.reduce((a,b)=>a+b)
+        }
+      };
+    </script>
+  </body>
+</html>
